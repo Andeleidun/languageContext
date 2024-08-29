@@ -1,25 +1,25 @@
-import React, { useContext } from 'react';
+import React, { useContext, memo } from 'react';
 import { LanguageContext } from './LanguageContext';
 import { translations } from '../data/translations';
 
-const LanguageChange = () => {
-    const { language, changeLanguage } = useContext(LanguageContext);
+const LanguageChange = memo(function LanguageChange() {
+  const { language, changeLanguage } = useContext(LanguageContext);
 
-    const handleLanguageChange = (event) => {
-        changeLanguage(event.target.value);
-    };
+  const handleLanguageChange = (event) => {
+    changeLanguage(event.target.value);
+  };
 
-    return (
-        <div>
-            <label>
-                {translations.selectLanguage[language]}
-                <select onChange={handleLanguageChange} value={language}>
-                    <option value="en">{translations.english[language]}</option>
-                    <option value="es">{translations.spanish[language]}</option>
-                </select>
-            </label>
-        </div>
-    );
-};
+  return (
+    <div>
+      <label>
+        {translations.selectLanguage[language]}
+        <select onChange={handleLanguageChange} value={language}>
+          <option value="en">{translations.english[language]}</option>
+          <option value="es">{translations.spanish[language]}</option>
+        </select>
+      </label>
+    </div>
+  );
+});
 
 export default LanguageChange;

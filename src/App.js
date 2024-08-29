@@ -9,7 +9,7 @@ function App() {
   return (
     <div className="App">
       <header>
-            <h1>{translations.appTitle[language]}</h1>
+        <h1>{translations.appTitle[language]}</h1>
       </header>
       <main>
         <p>{translations.welcomeMessage[language]}</p>
