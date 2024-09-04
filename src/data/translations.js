@@ -1,7 +1,7 @@
 export const translations = {
   appTitle: {
     en: 'React Language Context Tutorial',
-    es: 'Tutorial de Contexto del Lenguaje React',
+    es: 'Tutorial de Contexto de Idiomas en React',
   },
   greeting: {
     en: 'Hello',
@@ -12,7 +12,7 @@ export const translations = {
     es: '¡Bienvenido a nuestra aplicación multilingüe!',
   },
   changeLanguage: {
-    en: 'Change Language',
+    en: 'Switch Language',
     es: 'Cambiar Idioma',
   },
   language: {
@@ -20,8 +20,8 @@ export const translations = {
     es: 'Idioma',
   },
   selectLanguage: {
-    en: 'Select your preferred language:',
-    es: 'Seleccione su idioma preferido:',
+    en: 'Choose your preferred language:',
+    es: 'Elige tu idioma preferido:',
   },
   home: {
     en: 'Home',
@@ -36,16 +36,16 @@ export const translations = {
     es: 'Español',
   },
   feedbackLabel: {
-    en: 'Feedback',
-    es: 'Retroalimentación',
+    en: 'Your Feedback',
+    es: 'Tu Retroalimentación',
   },
   feedbackPlaceholder: {
-    en: 'Enter your feedback',
-    es: 'Ingrese su retroalimentación',
+    en: 'Please provide your feedback',
+    es: 'Por favor, proporciona tu retroalimentación',
   },
   ratingLabel: {
-    en: 'Rating',
-    es: 'Calificación',
+    en: 'Rate Our Service',
+    es: 'Califica Nuestro Servicio',
   },
   ratingOptions: {
     excellent: {
@@ -58,16 +58,16 @@ export const translations = {
     },
     average: {
       en: 'Average',
-      es: 'Promedio',
+      es: 'Regular',
     },
     poor: {
       en: 'Poor',
-      es: 'Pobre',
+      es: 'Malo',
     },
   },
   recommendLabel: {
     en: 'Would you recommend our service?',
-    es: '¿Recomendaría nuestro servicio?',
+    es: '¿Recomendarías nuestro servicio?',
   },
   recommendOptions: {
     yes: {
@@ -80,16 +80,16 @@ export const translations = {
     },
   },
   submitButton: {
-    en: 'Submit',
-    es: 'Enviar',
+    en: 'Submit Feedback',
+    es: 'Enviar Retroalimentación',
   },
   resetButton: {
-    en: 'Reset',
-    es: 'Reiniciar',
+    en: 'Clear Form',
+    es: 'Limpiar Formulario',
   },
   feedbackTitle: {
     en: 'User Feedback',
-    es: 'Retroalimentación del Usuario',
+    es: 'Retroalimentación de Usuarios',
   },
   submittedEntriesTitle: {
     en: 'Submitted Feedback',

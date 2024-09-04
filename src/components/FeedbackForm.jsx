@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import { LanguageContext } from './LanguageContext';
 import { translations } from '../data/translations';
 
-const FeedbackForm = () => {
+export const FeedbackForm = () => {
   const { language } = useContext(LanguageContext);
   const initialFormState = {
     feedback: '',
@@ -134,5 +134,3 @@ const FeedbackForm = () => {
     </div>
   );
 };
-
-export default FeedbackForm;

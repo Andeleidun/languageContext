@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { LanguageContext } from './LanguageContext';
 import { translations } from '../data/translations';
 
-function Header() {
+export function Header() {
   const { language } = useContext(LanguageContext);
 
   return (
@@ -11,5 +11,3 @@ function Header() {
     </header>
   );
 }
-
-export default Header;
