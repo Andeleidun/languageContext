@@ -1,8 +1,8 @@
-import React, { useContext, memo } from 'react';
+import React, { useContext } from 'react';
 import { LanguageContext } from './LanguageContext';
 import { translations } from '../data/translations';
 
-export const LanguageChange = memo(function LanguageChange() {
+export function LanguageChange() {
   const { language, changeLanguage } = useContext(LanguageContext);
 
   const handleLanguageChange = (event) => {
@@ -20,4 +20,4 @@ export const LanguageChange = memo(function LanguageChange() {
       </label>
     </div>
   );
-});
+}
