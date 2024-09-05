@@ -1,8 +1,7 @@
 import React, { useContext } from 'react';
 import { LanguageContext } from './LanguageContext';
-import { translations } from '../data/translations';
 
-export function Header() {
+export function Header({ translations }) {
   const { language } = useContext(LanguageContext);
 
   return (

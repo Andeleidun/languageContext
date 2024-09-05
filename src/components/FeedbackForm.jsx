@@ -1,8 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { LanguageContext } from './LanguageContext';
-import { translations } from '../data/translations';
 
-export const FeedbackForm = () => {
+export const FeedbackForm = ({ translations }) => {
   const { language } = useContext(LanguageContext);
   const initialFormState = {
     feedback: '',
