@@ -11,7 +11,11 @@ function App() {
   const [translations, setTranslations] = useState();
 
   useEffect(() => {
-    fetchTranslations().then((data) => setTranslations(data));
+    fetchTranslations()
+      .then((data) => setTranslations(data))
+      .catch((fallbackTranslations) => {
+        setTranslations(fallbackTranslations); // Fallback in case of failure
+      });
   }, []);
 
   return (

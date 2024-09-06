@@ -5,7 +5,7 @@ export function LanguageChange({ translations }) {
   const { language, changeLanguage } = useContext(LanguageContext);
 
   const handleLanguageChange = (event) => {
-    changeLanguage(event.target.value);
+    changeLanguage(event.target.value); // sets the current language to the value attribute of the chosen option
   };
 
   return (
