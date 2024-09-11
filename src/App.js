@@ -3,7 +3,7 @@ import { LanguageContext } from './components/LanguageContext';
 import { LanguageChange } from './components/LanguageChange';
 import { Header } from './components/Header';
 import { FeedbackForm } from './components/FeedbackForm';
-import { fetchTranslations } from './data/translations';
+import { getTranslations } from './data/translations';
 import './App.css';
 
 function App() {
@@ -11,11 +11,7 @@ function App() {
   const [translations, setTranslations] = useState();
 
   useEffect(() => {
-    fetchTranslations()
-      .then((data) => setTranslations(data))
-      .catch((fallbackTranslations) => {
-        setTranslations(fallbackTranslations); // Fallback in case of failure
-      });
+    getTranslations().then((data) => setTranslations(data));
   }, []);
 
   return (

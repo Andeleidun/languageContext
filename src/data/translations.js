@@ -101,13 +101,18 @@ const translations = {
   },
 };
 
-export async function fetchTranslations() {
-  return new Promise((resolve, reject) => {
-    try {
-      resolve(() => translations);
-    } catch (error) {
-      console.error('Translation fetching failed: ', error);
-      reject(translations); // provide backup translations
-    }
+async function fetchTranslations() {
+  return new Promise((resolve) => {
+    setTimeout(() => resolve(translations), 100); // Resolve with translations after 100ms
   });
+}
+
+export async function getTranslations() {
+  try {
+    const useTranslations = await fetchTranslations();
+    return useTranslations;
+  } catch (error) {
+    console.error('Translation fetching failed: ', error);
+    return translations; // Provide backup translations in case of error
+  }
 }
