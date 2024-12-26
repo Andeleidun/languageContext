@@ -2,10 +2,10 @@ import React, { useContext } from 'react';
 import { LanguageContext } from './LanguageContext';
 
 export function LanguageChange({ translations }) {
-  const { language, changeLanguage } = useContext(LanguageContext);
+  const { language, setLanguage } = useContext(LanguageContext);
 
   const handleLanguageChange = (event) => {
-    changeLanguage(event.target.value); // sets the current language to the value attribute of the chosen option
+    setLanguage(event.target.value); // sets the current language to the value attribute of the chosen option
   };
 
   return (

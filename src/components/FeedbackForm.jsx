@@ -1,13 +1,14 @@
 import React, { useContext, useState } from 'react';
 import { LanguageContext } from './LanguageContext';
 
+const initialFormState = {
+  feedback: '',
+  rating: '',
+  recommend: '',
+};
+
 export const FeedbackForm = ({ translations }) => {
   const { language } = useContext(LanguageContext);
-  const initialFormState = {
-    feedback: '',
-    rating: '',
-    recommend: '',
-  };
   const [formData, setFormData] = useState(initialFormState);
   const [submittedData, setSubmittedData] = useState([]);
 
@@ -19,18 +20,14 @@ export const FeedbackForm = ({ translations }) => {
     });
   };
 
+  const handleReset = () => {
+    setFormData(initialFormState);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     setSubmittedData([...submittedData, formData]);
-    setFormData({
-      feedback: '',
-      rating: '',
-      recommend: '',
-    });
-  };
-
-  const handleReset = () => {
-    setFormData(initialFormState);
+    handleReset();
   };
 
   return (
