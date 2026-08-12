@@ -1,8 +1,8 @@
-import React, { useContext } from 'react';
-import { LanguageContext } from './LanguageContext';
+import React from 'react';
+import { useLanguage } from './LanguageContext';
 
 export function Header({ translations }) {
-  const { language } = useContext(LanguageContext);
+  const { language } = useLanguage();
 
   return (
     <header>

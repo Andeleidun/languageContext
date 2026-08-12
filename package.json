@@ -8,15 +8,17 @@
     "@testing-library/user-event": "^14.5.2",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-scripts": "^5.0.1",
-    "web-vitals": "^2.1.4"
+    "react-scripts": "^5.0.1"
   },
   "scripts": {
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "format": "prettier --write \"src/**/*.{js,jsx,css}\" \"public/*.{html,json}\" README.md package.json",
+    "format:check": "prettier --check \"src/**/*.{js,jsx,css}\" \"public/*.{html,json}\" README.md package.json",
     "test": "react-scripts test",
+    "test:ci": "react-scripts test --watchAll=false --runInBand",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -39,10 +41,7 @@
   },
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
-    "@eslint/js": "^9.9.1",
-    "eslint": "^8.57.0",
-    "eslint-plugin-react": "^7.35.0",
     "gh-pages": "^6.1.1",
-    "globals": "^15.9.0"
+    "prettier": "3.9.6"
   }
 }

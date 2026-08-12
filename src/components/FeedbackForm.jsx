@@ -1,5 +1,5 @@
-import React, { useContext, useState } from 'react';
-import { LanguageContext } from './LanguageContext';
+import React, { useRef, useState } from 'react';
+import { useLanguage } from './LanguageContext';
 
 const initialFormState = {
   feedback: '',
@@ -8,125 +8,120 @@ const initialFormState = {
 };
 
 export const FeedbackForm = ({ translations }) => {
-  const { language } = useContext(LanguageContext);
+  const { language } = useLanguage();
   const [formData, setFormData] = useState(initialFormState);
   const [submittedData, setSubmittedData] = useState([]);
+  const [statusKey, setStatusKey] = useState('');
+  const nextEntryId = useRef(1);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
+    setFormData((current) => ({ ...current, [name]: value }));
+    setStatusKey('');
   };
 
   const handleReset = () => {
     setFormData(initialFormState);
+    setStatusKey('formCleared');
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setSubmittedData([...submittedData, formData]);
-    handleReset();
+    const entry = { ...formData, id: nextEntryId.current };
+    nextEntryId.current += 1;
+    setSubmittedData((current) => [...current, entry]);
+    setFormData(initialFormState);
+    setStatusKey('feedbackSubmitted');
   };
 
   return (
-    <div>
+    <section>
       <h2>{translations.feedbackTitle[language]}</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="feedback">
-            {translations.feedbackLabel[language]}
-          </label>
+      <form onSubmit={handleSubmit} onReset={handleReset}>
+        <label>
+          {translations.feedbackLabel[language]}
           <textarea
             id="feedback"
             name="feedback"
             placeholder={translations.feedbackPlaceholder[language]}
             value={formData.feedback}
             onChange={handleChange}
+            required
           />
-        </div>
-        <div>
-          <label htmlFor="rating">{translations.ratingLabel[language]}</label>
+        </label>
+        <label>
+          {translations.ratingLabel[language]}
           <select
             id="rating"
             name="rating"
             value={formData.rating}
             onChange={handleChange}
+            required
           >
-            <option value="">{translations.ratingLabel[language]}</option>
-            <option value="excellent">
-              {translations.ratingOptions.excellent[language]}
+            <option value="" disabled>
+              {translations.ratingPlaceholder[language]}
             </option>
-            <option value="good">
-              {translations.ratingOptions.good[language]}
-            </option>
-            <option value="average">
-              {translations.ratingOptions.average[language]}
-            </option>
-            <option value="poor">
-              {translations.ratingOptions.poor[language]}
-            </option>
+            {Object.entries(translations.ratingOptions).map(([key, value]) => (
+              <option value={key} key={key}>
+                {value[language]}
+              </option>
+            ))}
           </select>
-        </div>
-        <div>
-          <fieldset>
-            <legend>{translations.recommendLabel[language]}</legend>
-            <div className="radio-group">
-              <label>
-                <input
-                  id="recommendYes"
-                  type="radio"
-                  name="recommend"
-                  value="yes"
-                  checked={formData.recommend === 'yes'}
-                  onChange={handleChange}
-                />
-                {translations.recommendOptions.yes[language]}
-              </label>
-              <label>
-                <input
-                  id="recommendNo"
-                  type="radio"
-                  name="recommend"
-                  value="no"
-                  checked={formData.recommend === 'no'}
-                  onChange={handleChange}
-                />
-                {translations.recommendOptions.no[language]}
-              </label>
-            </div>
-          </fieldset>
-        </div>
-        <div>
-          <div className="button-group">
-            <button type="submit">{translations.submitButton[language]}</button>
-            <button type="reset" onClick={handleReset}>
-              {translations.resetButton[language]}
-            </button>
+        </label>
+        <fieldset>
+          <legend>{translations.recommendLabel[language]}</legend>
+          <div className="radio-group">
+            {Object.entries(translations.recommendOptions).map(
+              ([key, value]) => (
+                <label key={key}>
+                  <input
+                    id={`recommend-${key}`}
+                    type="radio"
+                    name="recommend"
+                    value={key}
+                    checked={formData.recommend === key}
+                    onChange={handleChange}
+                    required
+                  />
+                  {value[language]}
+                </label>
+              )
+            )}
           </div>
+        </fieldset>
+        <div className="button-group">
+          <button type="submit">{translations.submitButton[language]}</button>
+          <button type="reset">{translations.resetButton[language]}</button>
         </div>
       </form>
 
+      <p className="form-status" role="status" aria-atomic="true">
+        {statusKey ? translations[statusKey][language] : ''}
+      </p>
+
       <h2>{translations.submittedEntriesTitle[language]}</h2>
-      <ul>
-        {submittedData.map((entry, index) => (
-          <li key={index}>
-            <div>
-              <strong>{translations.feedbackLabel[language]}:</strong>
-              {entry.feedback}
-            </div>
-            <div>
-              <strong>{translations.ratingLabel[language]}:</strong>
-              {translations.ratingOptions[entry.rating][language]}
-            </div>
-            <div>
-              <strong>{translations.recommendLabel[language]}:</strong>
-              {translations.recommendOptions[entry.recommend][language]}
-            </div>
-          </li>
-        ))}
-      </ul>
-    </div>
+      {submittedData.length === 0 ? (
+        <p>{translations.noSubmissions[language]}</p>
+      ) : (
+        <ul>
+          {submittedData.map((entry) => (
+            <li key={entry.id}>
+              <div>
+                <strong>{translations.feedbackLabel[language]}:</strong>
+                {entry.feedback}
+              </div>
+              <div>
+                <strong>{translations.ratingLabel[language]}:</strong>
+                {translations.ratingOptions[entry.rating][language]}
+              </div>
+              <div>
+                <strong>{translations.recommendLabel[language]}:</strong>
+                {translations.recommendOptions[entry.recommend][language]}
+              </div>
+            </li>
+          ))}
+        </ul>
+      )}
+    </section>
   );
 };

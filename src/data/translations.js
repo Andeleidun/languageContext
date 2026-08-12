@@ -1,32 +1,16 @@
-const translations = {
+export const translations = {
   main: {
     appTitle: {
       en: 'React Language Context Tutorial',
       es: 'Tutorial de Contexto de Idiomas en React',
     },
-    greeting: {
-      en: 'Hello',
-      es: 'Hola',
-    },
     welcomeMessage: {
       en: 'Welcome to our multilingual application!',
       es: '¡Bienvenido a nuestra aplicación multilingüe!',
     },
-    changeLanguage: {
-      en: 'Switch Language',
-      es: 'Cambiar Idioma',
-    },
-    language: {
-      en: 'Language',
-      es: 'Idioma',
-    },
     selectLanguage: {
       en: 'Choose your preferred language:',
       es: 'Elige tu idioma preferido:',
-    },
-    home: {
-      en: 'Home',
-      es: 'Inicio',
     },
     english: {
       en: 'English',
@@ -39,7 +23,7 @@ const translations = {
   },
   feedback: {
     feedbackLabel: {
-      en: 'Your Feedback',
+      en: 'Your feedback',
       es: 'Tu Retroalimentación',
     },
     feedbackPlaceholder: {
@@ -47,8 +31,12 @@ const translations = {
       es: 'Por favor, proporciona tu retroalimentación',
     },
     ratingLabel: {
-      en: 'Rate Our Service',
+      en: 'Rate our service',
       es: 'Califica Nuestro Servicio',
+    },
+    ratingPlaceholder: {
+      en: 'Select a rating',
+      es: 'Selecciona una calificación',
     },
     ratingOptions: {
       excellent: {
@@ -98,21 +86,41 @@ const translations = {
       en: 'Submitted Feedback',
       es: 'Retroalimentación Enviada',
     },
+    feedbackSubmitted: {
+      en: 'Feedback submitted.',
+      es: 'Retroalimentación enviada.',
+    },
+    formCleared: {
+      en: 'Form cleared.',
+      es: 'Formulario limpiado.',
+    },
+    noSubmissions: {
+      en: 'No feedback has been submitted.',
+      es: 'No se ha enviado retroalimentación.',
+    },
   },
 };
 
-async function fetchTranslations() {
-  return new Promise((resolve) => {
-    setTimeout(() => resolve(translations), 100); // Resolve with translations after 100ms
+function fetchTranslations({ signal } = {}) {
+  return new Promise((resolve, reject) => {
+    const handleAbort = () => {
+      clearTimeout(timeoutId);
+      reject(new DOMException('Translation request cancelled.', 'AbortError'));
+    };
+    const timeoutId = setTimeout(() => {
+      signal?.removeEventListener('abort', handleAbort);
+      resolve(translations);
+    }, 300);
+
+    if (signal?.aborted) {
+      handleAbort();
+      return;
+    }
+
+    signal?.addEventListener('abort', handleAbort, { once: true });
   });
 }
 
-export async function getTranslations() {
-  try {
-    const useTranslations = await fetchTranslations();
-    return useTranslations;
-  } catch (error) {
-    console.error('Translation fetching failed: ', error);
-    return translations; // Provide backup translations in case of error
-  }
+export function getTranslations(options) {
+  return fetchTranslations(options);
 }

@@ -1,22 +1,20 @@
-import React, { useContext } from 'react';
-import { LanguageContext } from './LanguageContext';
+import React from 'react';
+import { useLanguage } from './LanguageContext';
 
 export function LanguageChange({ translations }) {
-  const { language, setLanguage } = useContext(LanguageContext);
+  const { language, setLanguage } = useLanguage();
 
   const handleLanguageChange = (event) => {
-    setLanguage(event.target.value); // sets the current language to the value attribute of the chosen option
+    setLanguage(event.target.value);
   };
 
   return (
-    <div>
-      <label>
-        {translations.selectLanguage[language]}
-        <select onChange={handleLanguageChange} value={language}>
-          <option value="en">{translations.english[language]}</option>
-          <option value="es">{translations.spanish[language]}</option>
-        </select>
-      </label>
-    </div>
+    <label>
+      {translations.selectLanguage[language]}
+      <select onChange={handleLanguageChange} value={language}>
+        <option value="en">{translations.english[language]}</option>
+        <option value="es">{translations.spanish[language]}</option>
+      </select>
+    </label>
   );
 }

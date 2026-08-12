@@ -1,4 +1,10 @@
 /* General Styles */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 body {
   font-family: Arial, sans-serif;
   background-color: #f9f9f9;
@@ -9,14 +15,17 @@ body {
   justify-content: center;
 }
 
+#root {
+  width: 100%;
+}
+
 .container {
-  width: 90%;
-  max-width: 600px;
+  width: min(100% - 2rem, 42rem);
+  margin: 2rem auto;
+  padding: 1.5rem;
   background-color: #fff;
-  padding: 20px;
-  margin-top: 40px; /* Add margin to top for spacing */
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 0.5rem;
+  box-shadow: 0 0.25rem 1rem rgba(0, 0, 0, 0.1);
 }
 
 h1,
@@ -71,12 +80,12 @@ form {
 }
 
 label {
+  display: block;
   margin-bottom: 5px;
   font-weight: bold;
 }
 
 input[type='text'],
-input[type='email'],
 textarea,
 select {
   width: 100%;
@@ -86,15 +95,17 @@ select {
   border-radius: 4px;
   font-size: 1rem;
   background-color: #f9f9f9;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  transition:
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
 input:focus,
 textarea:focus,
 select:focus {
   border-color: #0056b3;
-  outline: none;
-  box-shadow: 0 0 0 3px rgba(0, 86, 179, 0.25); /* High contrast focus outline */
+  outline: 3px solid rgba(0, 86, 179, 0.35);
+  outline-offset: 2px;
 }
 
 textarea {
@@ -138,7 +149,8 @@ legend {
 }
 
 button[type='submit'],
-button[type='reset'] {
+button[type='reset'],
+button[type='button'] {
   padding: 10px 15px;
   font-size: 1rem;
   color: #fff;
@@ -161,8 +173,26 @@ button[type='reset'] {
   background-color: #495057;
 }
 
+button[type='button'] {
+  background-color: #0056b3;
+}
+
 button[type='reset']:hover {
   background-color: #343a40;
+}
+
+button:focus-visible {
+  outline: 3px solid #ffbf47;
+  outline-offset: 3px;
+}
+
+.form-status {
+  min-height: 1.5rem;
+}
+
+.loading-state,
+.error-state {
+  text-align: center;
 }
 
 /* Responsive Styles */
@@ -178,7 +208,42 @@ button[type='reset']:hover {
   }
 
   button[type='submit'],
-  button[type='reset'] {
+  button[type='reset'],
+  button[type='button'] {
     width: 100%;
+  }
+}
+
+/* Animation Styles */
+
+.loader {
+  width: 60px;
+  aspect-ratio: 4;
+  background: radial-gradient(circle closest-side, #000 90%, #0000) 0 /
+    calc(100% / 3) 100% space;
+  clip-path: inset(0 100% 0 0);
+  animation: l1 1s steps(4) infinite;
+  position: absolute;
+  top: 30%;
+  left: calc(50% - 30px);
+}
+
+@keyframes l1 {
+  to {
+    clip-path: inset(0 -34% 0 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .loader {
+    animation: none;
+    clip-path: none;
   }
 }
