@@ -1,5 +1,5 @@
-import React, { useRef, useState } from 'react';
-import { useLanguage } from './LanguageContext';
+import { useRef, useState } from 'react';
+import { useLanguage } from './useLanguage';
 
 const initialFormState = {
   feedback: '',

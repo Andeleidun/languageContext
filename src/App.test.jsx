@@ -1,5 +1,6 @@
 import { act, render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { vi } from 'vitest';
 import App from './App';
 import { translations } from './data/translations';
 
@@ -63,7 +64,7 @@ test('submits valid feedback and exposes the result as a status message', async 
 
 test('shows a recoverable error when translation loading fails', async () => {
   const user = userEvent.setup();
-  const loadTranslations = jest
+  const loadTranslations = vi
     .fn()
     .mockRejectedValueOnce(new Error('synthetic failure'))
     .mockResolvedValueOnce(translations);

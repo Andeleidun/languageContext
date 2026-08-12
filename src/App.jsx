@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { LanguageProvider, useLanguage } from './components/LanguageContext';
+import { useEffect, useState } from 'react';
+import { LanguageProvider } from './components/LanguageContext';
+import { useLanguage } from './components/useLanguage';
 import { LanguageChange } from './components/LanguageChange';
 import { Header } from './components/Header';
 import { FeedbackForm } from './components/FeedbackForm';
@@ -17,8 +18,6 @@ export function LanguageContextExample({ loadTranslations = getTranslations }) {
   useEffect(() => {
     const controller = new AbortController();
     let isActive = true;
-    setTranslationState({ status: 'loading', data: null });
-
     async function loadTranslationsForRequest() {
       try {
         const data = await loadTranslations({ signal: controller.signal });
@@ -58,7 +57,13 @@ export function LanguageContextExample({ loadTranslations = getTranslations }) {
       <main className="container error-state">
         <h1>React Language Context Tutorial</h1>
         <p role="alert">Translations could not be loaded.</p>
-        <button type="button" onClick={() => setRequestId((id) => id + 1)}>
+        <button
+          type="button"
+          onClick={() => {
+            setTranslationState({ status: 'loading', data: null });
+            setRequestId((id) => id + 1);
+          }}
+        >
           Try again
         </button>
       </main>

@@ -32,14 +32,15 @@ loading, error, and retry states.
 
 Prerequisites:
 
-- A current Node.js LTS release with npm.
+- Node.js 20.19 or later in the 20.x line, Node.js 22.13 or later in the
+  22.x line, or Node.js 24 or later, with npm.
 - A browser that supports `AbortController`.
 
 From this directory:
 
 ```sh
 npm ci
-npm start
+npm run dev
 ```
 
 Open the local URL printed by the development server. Select Spanish, submit a
@@ -48,9 +49,10 @@ correct while their labels change language.
 
 ## Verify the example
 
-Run the behavior tests once:
+Run static analysis and the behavior tests once:
 
 ```sh
+npm run lint
 npm run test:ci
 ```
 
@@ -59,6 +61,8 @@ Create the production bundle:
 ```sh
 npm run build
 ```
+
+Run `npm run preview` to inspect the generated `dist` directory locally.
 
 The tests cover initial loading, document-language synchronization, translated
 content, feedback submission, the live submission status, failure, and retry.
@@ -73,7 +77,7 @@ and expose the retry path. Tests inject a rejected request to verify that path.
 
 If installation fails, remove the generated `node_modules` directory and run
 `npm ci` again with the committed lockfile. If a production build is stale,
-remove the generated `build` directory and rerun `npm run build`. Reloading the
+remove the generated `dist` directory and rerun `npm run build`. Reloading the
 page resets all in-memory language and feedback state.
 
 Stop the development server with `Ctrl+C`. The example creates no account,
@@ -94,17 +98,11 @@ required for a release claim.
 
 ## Dependency security status
 
-On 2026-08-11, a non-forced `npm audit fix` reduced this repository's
-`npm audit --omit=dev` result from 64 findings to 28: 9 low, 5 moderate,
-and 14 high. A second safe remediation pass made no further change. The
-remaining chains are owned by Create React App's build, test, asset, and
-development-server dependencies. npm's forced proposal would install the
-invalid `react-scripts@0.0.0` package and was not applied.
-
-Treat the remaining findings and the unmaintained toolchain as a production
-release blocker. Run the development server only against trusted local source,
-do not expose it to an untrusted network, and migrate the example before using
-its toolchain for production delivery. Re-audit the migrated exact lockfile.
+On 2026-08-11, the exact Vite 8.2.1 and Vitest 4.1.10 dependency closure
+reported zero known vulnerabilities through npm audit. This replaces the
+retired Create React App dependency tree that previously reported 28 findings.
+Re-run the audit whenever the lockfile changes because registry advisories and
+the resolved closure can change.
 
 ## Limits and production differences
 
@@ -114,16 +112,20 @@ its toolchain for production delivery. Re-audit the migrated exact lockfile.
   authenticate its source, validate the response, define cache and fallback
   policy, and record useful diagnostics without exposing sensitive content.
 - Feedback is stored only in component memory and is intentionally not sent.
-- This repository preserves its React 18 and Create React App 5 teaching
-  checkpoint. Create React App is deprecated. New applications should follow
-  current React guidance and choose an actively maintained framework or build
-  tool; migrate this example only as a separately reviewed compatibility change.
+- Git history preserves the earlier React 18 and Create React App 5 checkpoint.
+  The current checkpoint uses Vite 8.2.1 and Vitest 4.1.10 while keeping the
+  application behavior and React version stable.
+- Vite 8 targets its current modern browser baseline by default. Confirm the
+  production browser support policy before delivery and add a reviewed legacy
+  build strategy only when the intended audience requires it.
 
 ## Sources
 
 - [React: Passing Data Deeply with Context](https://react.dev/learn/passing-data-deeply-with-context)
 - [React: `useContext`](https://react.dev/reference/react/useContext)
 - [React: Sunsetting Create React App](https://react.dev/blog/2025/02/14/sunsetting-create-react-app)
+- [Vite: Getting Started](https://vite.dev/guide/)
+- [Vitest: Getting Started](https://vitest.dev/guide/)
 
 ## License
 
