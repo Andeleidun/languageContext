@@ -1,9 +1,10 @@
 # React language context example
 
-This example shows a complete React Context boundary for switching an
-interface between English and Spanish. It loads a synthetic translation bundle,
-updates the document language, translates a feedback workflow, and provides
-loading, error, retry, reset, and submission states.
+This example accompanies the [full tutorial](article/tutorial.md). Together,
+they show a complete React Context boundary for switching an interface between
+English and Spanish. The example loads a synthetic translation bundle, updates
+the document language, translates a feedback workflow, and provides loading,
+error, retry, reset, and submission states.
 
 ## Audience and outcome
 
@@ -47,19 +48,13 @@ Open the local URL printed by the development server. Select Spanish, submit a
 feedback entry, and switch back to English. The saved semantic choices remain
 correct while their labels change language.
 
-## Verify the example
+## Verify the pair
 
-Run static analysis and the behavior tests once:
-
-```sh
-npm run lint
-npm run test:ci
-```
-
-Create the production bundle:
+Run the complete formatting, lint, behavior, tutorial-binding,
+teaching-history, and production-build gate:
 
 ```sh
-npm run build
+npm run check
 ```
 
 Run `npm run preview` to inspect the generated `dist` directory locally.
@@ -98,7 +93,7 @@ required for a release claim.
 
 ## Dependency security status
 
-On 2026-08-11, the exact Vite 8.2.1 and Vitest 4.1.10 dependency closure
+On 2026-09-15, the exact Vite 8.2.1 and Vitest 4.1.11 dependency closure
 reported zero known vulnerabilities through npm audit. This replaces the
 retired Create React App dependency tree that previously reported 28 findings.
 Re-run the audit whenever the lockfile changes because registry advisories and
@@ -113,7 +108,7 @@ the resolved closure can change.
   policy, and record useful diagnostics without exposing sensitive content.
 - Feedback is stored only in component memory and is intentionally not sent.
 - Git history preserves the earlier React 18 and Create React App 5 checkpoint.
-  The current checkpoint uses Vite 8.2.1 and Vitest 4.1.10 while keeping the
+  The current checkpoint uses Vite 8.2.1 and Vitest 4.1.11 while keeping the
   application behavior and React version stable.
 - Vite 8 targets its current modern browser baseline by default. Confirm the
   production browser support policy before delivery and add a reviewed legacy
